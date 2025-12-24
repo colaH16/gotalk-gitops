@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DB_NAME
-              value: "gotalk"
+              value: "gotalk_v3"
             - name: NATS_URL
               value: "nats://gotalk-nats-headless:4222"
             - name: DB_HOST
