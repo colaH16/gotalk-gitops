@@ -3,12 +3,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
   annotations:
+    meta.helm.sh/release-name: github-cotalk
+    meta.helm.sh/release-namespace: default
+    helm.sh/resource-policy: keep
     pv.kubernetes.io/provisioned-by: cephfs.csi.ceph.com
     volume.kubernetes.io/provisioner-deletion-secret-name: csi-cephfs-secret
     volume.kubernetes.io/provisioner-deletion-secret-namespace: cephfs-sc
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "-5"
   name: pv-gotalk-db
 spec:
   accessModes:
@@ -39,13 +42,14 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
   annotations:
-    pv.kubernetes.io/bind-completed: 'yes'
-    pv.kubernetes.io/bound-by-controller: 'yes'
+    meta.helm.sh/release-name: github-cotalk
+    meta.helm.sh/release-namespace: default
+    helm.sh/resource-policy: keep
     volume.beta.kubernetes.io/storage-provisioner: cephfs.csi.ceph.com
     volume.kubernetes.io/storage-provisioner: cephfs.csi.ceph.com
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "-10"
 
   name: pvc-gotalk-db
   namespace: myapps
