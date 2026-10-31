@@ -2,12 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
+    meta.helm.sh/release-name: github-cotalk
+    meta.helm.sh/release-namespace: default
     kompose.cmd: kompose convert --volumes hostPath --controller statefulset -f kompose.yml.txt
     kompose.version: 1.30.0 (HEAD)
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "-5"
   creationTimestamp: null
   labels:
+    app.kubernetes.io/managed-by: Helm
     io.kompose.service: gotalk-dbpost
   name: gotalk-dbpost
   namespace: myapps
