@@ -17,12 +17,38 @@ spec:
     spec:
       containers:
         - name: gotalk
-          # 아래 주소는 본인 ghcr 주소로 변경하세요!
-          image: ghcr.io/colah16/gotalk:sha-1f1bc5a
+          # Rustalk: tested amd64/arm64 manifest; configuration uses env only.
+          image: ghcr.io/colah16/rustalk@sha256:1099947057455dccc8cb0d940af847566ec1452421bfd1ca1a897a422cacfe2b
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
+          startupProbe:
+            httpGet:
+              path: /livez
+              port: 8080
+            periodSeconds: 2
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            periodSeconds: 5
+            timeoutSeconds: 6
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 2
           env:
+            - name: DB_INIT_SCHEMA
+              value: "false"
+            - name: DB_MAX_CONNECTIONS
+              value: "10"
+            - name: DB_SSLMODE
+              value: "disable"
+            - name: NATS_SUBJECT
+              value: "chat.global"
             - name: UMASK
               value: "002"
             - name: TZ
