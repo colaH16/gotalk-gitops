@@ -18,7 +18,7 @@ spec:
       containers:
         - name: gotalk
           # Rustalk: tested amd64/arm64 manifest; configuration uses env only.
-          image: ghcr.io/colah16/rustalk@sha256:1099947057455dccc8cb0d940af847566ec1452421bfd1ca1a897a422cacfe2b
+          image: ghcr.io/colah16/rustalk@sha256:f59eb2225b92a9605fe8975587fddea6a14933bf4d5ba80d60fad244ad6365e7
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
@@ -43,6 +43,8 @@ spec:
           env:
             - name: DB_INIT_SCHEMA
               value: "false"
+            - name: DB_TIMEZONE
+              value: "Asia/Seoul"
             - name: DB_MAX_CONNECTIONS
               value: "10"
             - name: DB_SSLMODE
